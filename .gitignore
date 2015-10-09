@@ -3,3 +3,4 @@ __pychache__
 TaskBuster.sublime-workspace.coverage
 htmlconv
 .coverage
+taskbuster/fixtures

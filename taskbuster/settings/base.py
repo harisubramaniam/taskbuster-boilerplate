@@ -74,6 +74,11 @@ TEMPLATES = [
                 'django.template.context_processors.tz',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # Required by allauth template tags
+                'django.core.context_processors.request',
+                # allauth specific context processors
+                # 'allauth.account.context_processors.account',
+                # 'allauth.socialaccount.context_processors.socialaccount',
             ],
         },
     },
@@ -112,7 +117,7 @@ USE_L10N = True
 USE_TZ = True
 
 LOCALE_PATHS = (
-                os.path.join(BASE_DIR, 'locale'),
+    os.path.join(BASE_DIR, 'locale'),
 )
 
 # Static files (CSS, JavaScript, Images)
@@ -121,5 +126,30 @@ LOCALE_PATHS = (
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-                   os.path.join(BASE_DIR, "static"),
-                   )
+   os.path.join(BASE_DIR, "static"),
+)
+
+# Authentication back-end
+AUTHENTICATION_BACKENDS = (
+    # Default backend -- used by login by username in Django admin
+    'django.contrib.auth.backends.ModelBackend',
+    # 'allauth' specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+INSTALLED_APPS += (
+                   # The Django sites framework is required
+                   'django.contrib.sites',
+                   'allauth',
+                   'allauth.account',
+                   'allauth.socialaccount',
+                   # Login via Google
+                   'allauth.socialaccount.providers.google',
+)
+
+SITE_ID = 1
+
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+SOCIAL_ACCOUNT_QUERY_EMAIL = True
+LOGIN_REDIRECT_URL = "/"
